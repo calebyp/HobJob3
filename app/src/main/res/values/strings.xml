@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Hob Job</string>
+
+    <string-array name="type_name">
+        <item>Pick a Type</item>
+        <item>Sell</item>
+        <item>Trade</item>
+        <item>Free</item>
+    </string-array>
+</resources>
