@@ -112,6 +112,10 @@ public class CreateActivity extends AppCompatActivity {
   /* Obtain String from Intent  */
         if(intent !=null) {
             String strdata = intent.getExtras().getString("Uniqid");
+            String contact = intent.getExtras().getString("contact");
+            String type = intent.getExtras().getString("type");
+            String description = intent.getExtras().getString("description");
+            String event = intent.getExtras().getString("event");
             if (strdata.equals("From_Activity_A")) {
                 btnAdd.setEnabled(false);
                 captureButton.setEnabled(false);
@@ -120,6 +124,11 @@ public class CreateActivity extends AppCompatActivity {
                 eventTV.setEnabled(false);
                 descriptionTV.setEnabled(false);
                 galleryButton.setEnabled(false);
+
+                contactTV.setText(contact);
+                eventTV.setText(event);
+                descriptionTV.setText(description);
+                spintype.setPrompt(type);
             }
             if(strdata.equals("From_Activity_B")){
                 btnAdd.setEnabled(true);

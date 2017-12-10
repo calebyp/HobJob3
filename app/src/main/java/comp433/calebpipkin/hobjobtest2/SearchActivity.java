@@ -33,8 +33,12 @@ public class SearchActivity extends AppCompatActivity {
     private ListView mListView;
 
     SQLiteDatabase sqlitedatabase;
+
+    DataProvider dataprovider;
     Cursor mCursor;
     MyListAdapter mylistadapter;
+
+    String type, contact, event, description, image;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,10 +63,8 @@ public class SearchActivity extends AppCompatActivity {
         ArrayList<String> listData = new ArrayList<>();
         ArrayList<String> listCollection = new ArrayList<>();
 
-        //Comment this out for the simple list, clicking works
         while (data.moveToNext()) {
             listData.add(data.getString(1));
-            String type, contact, event, description, image;
             type = data.getString(1);
             contact = data.getString(2);
             event = data.getString(3);
@@ -106,23 +108,32 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String name = adapterView.getItemAtPosition(i).toString();
-
-
-
-                Log.d(TAG, name);
                 Log.d(TAG, "onItemClick: You Clicked on " + name);
 
+
                 Cursor data = mDatabaseHelper.getItemID(name); //get the id associated with that name
-                int itemID = -1;
+                int itemID = 0;
                 while (data.moveToNext()) {
                     itemID = data.getInt(0);
                 }
-                if (itemID == 0) {
+                Cursor data1 = mDatabaseHelper.getData(name);
+                while ((data1.moveToNext())){
+                    type = data1.getString(1);
+                    contact = data1.getString(2);
+                    event = data1.getString(3);
+//                    description = data.getString(4);
+                }
+
+                if (itemID > -1) {
                     Log.d(TAG, "onItemClick: The ID is: " + itemID);
                     Intent editScreenIntent = new Intent(SearchActivity.this, CreateActivity.class);
                     editScreenIntent.putExtra("id", itemID);
                     editScreenIntent.putExtra("name", name);
                     editScreenIntent.putExtra("Uniqid","From_Activity_A");
+                    editScreenIntent.putExtra("contact", contact);
+                    editScreenIntent.putExtra("type", type);
+                    editScreenIntent.putExtra("event", event);
+                    editScreenIntent.putExtra("description", description);
                     startActivity(editScreenIntent);
                 } else {
                     toastMessage("No ID associated with that name");
