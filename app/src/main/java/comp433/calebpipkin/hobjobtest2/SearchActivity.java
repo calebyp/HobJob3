@@ -34,11 +34,12 @@ public class SearchActivity extends AppCompatActivity {
 
     SQLiteDatabase sqlitedatabase;
 
-    DataProvider dataprovider;
     Cursor mCursor;
     MyListAdapter mylistadapter;
 
     String type, contact, event, description, image;
+
+    DataProvider dataProvider;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,7 +73,7 @@ public class SearchActivity extends AppCompatActivity {
             image = data.getString(5);
             //listData.add(data.getString(5));
 
-            DataProvider dataProvider = new DataProvider(type, contact, event, description, image);
+            dataProvider = new DataProvider(type, contact, event, description, image);
 
             listCollection.add(data.getString(1));
         }
@@ -86,6 +87,7 @@ public class SearchActivity extends AppCompatActivity {
                 event = mCursor.getString(3);
                 description = mCursor.getString(4);
                 image = mCursor.getString(5);
+
 
                 DataProvider dataProvider = new DataProvider(type, contact, event, description, image);
                 mylistadapter.add(dataProvider);
@@ -123,6 +125,12 @@ public class SearchActivity extends AppCompatActivity {
                     event = data1.getString(3);
 //                    description = data.getString(4);
                 }
+
+                type = dataProvider.getType();
+                contact = dataProvider.getContact();
+                event = dataProvider.getEvent();
+                description = dataProvider.getDescription();
+                image = dataProvider.getImageresource();
 
                 if (itemID > -1) {
                     Log.d(TAG, "onItemClick: The ID is: " + itemID);
